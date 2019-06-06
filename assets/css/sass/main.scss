@@ -3,7 +3,13 @@
 @import 'abstract/functions';
 
 /* Base */
+@import 'base/typography';
 
 /* Layout */
+@import 'layout/header';
+@import 'layout/footer';
+@import 'layout/app';
 
 /* Components */
+@import 'components/characters';
+@import 'components/social';

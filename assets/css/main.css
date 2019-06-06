@@ -1,3 +1,62 @@
 /* Base */
+body {
+  background-color: #333;
+  color: #fff;
+}
+
 /* Layout */
+header {
+  height: 58px;
+  line-height: 58px;
+  text-align: center;
+}
+
+.heading {
+  font-size: 28px;
+}
+
+footer {
+  min-height: 50px;
+  font-size: 24px;
+  text-align: center;
+  margin-top: calc(100vh - 200px);
+  padding: 10px 0;
+}
+
+#app {
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  position: absolute;
+  text-align: center;
+}
+
 /* Components */
+#characters {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+#characters li {
+  float: left;
+}
+
+.social {
+  padding: 9px 0;
+}
+
+.social-link {
+  text-decoration: none;
+}
+
+.social-link i {
+  height: 50px;
+  width: 50px;
+  line-height: 50px;
+  font-size: 25px;
+  background-color: #bada55;
+  color: #333;
+  border-radius: 50%;
+}
