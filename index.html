@@ -23,7 +23,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1>RPG</h1>
+                        <h1 class="heading">RPG</h1>
                     </div>
                 </div>
             </div>
@@ -32,25 +32,53 @@
             <div class="container">
                 <section id="app">
                     <ul id="characters">
-                        <li class="char">Character 1</li>
-                        <li class="char">Character 2</li>
-                        <li class="char">Character 3</li>
-                        <li class="char">Character 4</li>
+                        <li>
+                            <div id="char-1">
+                                <span id="char-1-name">Character 1</span>
+                                <span id="char-1-hitpoints">###</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="char-2">
+                                <span id="char-2-name">Character 2</span>
+                                <span id="char-2-hitpoints">###</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="char-3">
+                                <span id="char-3-name">Character 3</span>
+                                <span id="char-3-hitpoints">###</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div id="char-4">
+                                <span id="char-4-name">Character 4</span>
+                                <span id="char-4-hitpoints">###</span>
+                            </div>
+                        </li>
                     </ul>
-                    <div id="player">
-                        <h2>Your character</h2>
-                        <br />
-                        <div id="player-char"></div>
-                    </div>
+                    
                     <ul id="enemies"></ul>
+
                     <div id="battlefield">
                         <h2>The Battlefield</h2>
-                        <button id="atk-btn" class="btn">Attack</button>
+                        <div id="player">
+                            <h2>You</h2>
+                            <br />
+                            <div id="player-char">
+                                <span id="player-char-name">Player Character</span>
+                                <span id="player-char-hitpoints">###</span>
+                            </div>
+                        </div>
                         <div id="target">
                             <h2>Target</h2>
                             <br />
-                            <div id="target-char"></div>
+                            <div id="target-char">
+                                <span id="target-char-name">Target</span> Character</span>
+                                <span id="target-char-hitpoints">###</span>
+                            </div>
                         </div>
+                        <button id="atk-btn" class="btn">Attack</button>
                     </div>
                 </section>
             </div>
