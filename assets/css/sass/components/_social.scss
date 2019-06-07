@@ -10,8 +10,16 @@
             line-height: $size;
             font-size: $size * 0.5;
             background-color: color(accent);
-            color: color(bg-dark);
+            color: color(txt-light);
             border-radius: 50%;
+            border: 1px solid color(txt-light);
+
+            transition: ease-in-out 200ms;
+
+            &:hover {
+                background-color: darken(color(accent), 10);
+                transition: ease-in-out 200ms;
+            }
         }
     }
 }

@@ -1,0 +1,31 @@
+.char {
+    $size: 175px;
+    $font: 17px;
+
+    &-card {
+        background-color: red;
+        margin: $card-margin auto;
+        width: $size;
+        height: $size;
+    }
+
+    &-label {
+        width: 100%;
+        height: $size * 0.2;
+        line-height: $size * 0.2;
+        background-color: white;
+        color: color(txt-dark);
+    }
+
+    &-name,
+    &-hp {
+        font-size: $font;
+    }
+
+    &-hp::before {
+        content: 'hp: ';
+        font-size: $font * 0.75;
+        font-weight: bold;
+        color: color(accent);
+    }
+}

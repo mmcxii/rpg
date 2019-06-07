@@ -1,8 +1,9 @@
 $colors: (
-    accent: #bada55,
+    accent: darken(red, 20),
     txt-light: #fff,
     txt-dark: #000,
     bg-dark: #333,
 );
 
-$header: 58px;
+// Layout
+$card-margin: 20px;

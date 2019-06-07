@@ -1,0 +1,9 @@
+#character-select,
+#enemies {
+    display: flex;
+
+    li {
+        float: left;
+        margin: $card-margin;
+    }
+}

@@ -1,6 +1,8 @@
 header {
-    height: $header;
-    line-height: $header;
+    $size: 58px;
+
+    height: $size;
+    line-height: $size;
     text-align: center;
 }
 
