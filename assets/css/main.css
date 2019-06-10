@@ -38,31 +38,44 @@ footer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
 }
 
-#character-select li,
-#enemies li {
+#character-select .char-card,
+#enemies .char-card {
   float: left;
   margin: 20px;
+}
+
+#enemies-remaining {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .char-card {
   background-color: red;
   margin: 20px auto;
-  width: 175px;
-  height: 175px;
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
 }
 
 .char-label {
   width: 100%;
-  height: 35px;
-  line-height: 35px;
+  height: 40px;
+  line-height: 40px;
   background-color: white;
   color: #000;
 }
 
 .char-name, .char-hp {
   font-size: 17px;
+  text-transform: capitalize;
+  margin: 0 2px;
 }
 
 .char-hp::before {

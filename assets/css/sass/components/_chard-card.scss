@@ -1,5 +1,5 @@
 .char {
-    $size: 175px;
+    $size: 200px;
     $font: 17px;
 
     &-card {
@@ -7,6 +7,7 @@
         margin: $card-margin auto;
         width: $size;
         height: $size;
+        cursor: pointer;
     }
 
     &-label {
@@ -20,6 +21,8 @@
     &-name,
     &-hp {
         font-size: $font;
+        text-transform: capitalize;
+        margin: 0 2px;
     }
 
     &-hp::before {

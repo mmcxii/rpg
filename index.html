@@ -32,95 +32,29 @@
         <main>
             <div class="container">
                 <section id="app">
-                    <h2>Choose your Character:</h2>
-                    <ul id="character-select">
-                        <li>
-                            <div class="char-card" id="char-1">
-                                <div class="char-label">
-                                    <span class="char-name">Character 1</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="char-card" id="char-2">
-                                <div class="char-label">
-                                    <span class="char-name">Character 2</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="char-card" id="char-3">
-                                <div class="char-label">
-                                    <span class="char-name">Character 3</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="char-card" id="char-4">
-                                <div class="char-label">
-                                    <span class="char-name">Character 4</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                    <h2>Enemies:</h2>
-                    <ul id="enemies">
-                        <li>
-                            <div class="char-card" id="enemy-1">
-                                <div class="char-label">
-                                    <span class="char-name">Character 1</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="char-card" id="enemy-2">
-                                <div class="char-label">
-                                    <span class="char-name">Character 2</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="char-card" id="enemy-3">
-                                <div class="char-label">
-                                    <span class="char-name">Character 3</span>
-                                    <span class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
+                    <div id="character-select">
+                        <h2>Choose your Character:</h2>
+                        <hr />
+                    </div>
+
+                    <div id="enemies">
+                        <h2>Enemies Remaining:</h2>
+                        <hr />
+                        <div id="enemies-remaining"></div>
+                    </div>
 
                     <section id="battlefield">
                         <h2>The Battlefield</h2>
                         <hr />
-                        <div id="player">
-                            <h2>You:</h2>
-                            <div id="player-char" class="char-card">
-                                <div class="char-label">
-                                    <span id="player-char-name" class="char-name"
-                                        >Player Character</span
-                                    >
-                                    <span id="player-char-hitpoints" class="char-hp">###</span>
-                                </div>
+                        <div class="row">
+                            <div id="player" class="col-md-6">
+                                <h2>You:</h2>
+                            </div>
+                            <div id="target" class="col-md-6">
+                                <h2>Target:</h2>
                             </div>
                         </div>
-                        <div id="target">
-                            <h2>Target:</h2>
-                            <div id="target-char" class="char-card">
-                                <div class="char-label">
-                                    <span id="target-char-name" class="char-name">
-                                        Target Character
-                                    </span>
-                                    <span id="target-char-hitpoints" class="char-hp">###</span>
-                                </div>
-                            </div>
-                        </div>
-                        <button id="atk-btn" class="btn">Attack</button>
+                        <button id="atk-btn" class="btn" onclick="attack()">Attack</button>
                     </section>
                 </section>
             </div>

@@ -1,9 +1,14 @@
 #character-select,
 #enemies {
     display: flex;
+    flex-direction: row;
 
-    li {
+    .char-card {
         float: left;
         margin: $card-margin;
     }
+}
+
+#enemies-remaining {
+    display: flex;
 }
