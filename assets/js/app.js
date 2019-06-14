@@ -35,42 +35,34 @@ const characters = [
 
 let enemyList = [];
 
-function attack() {
-    // Select the player and the target from the Characters array
-    let player, target;
-    for (let i = 0; i < characters.length; i++) {
-        if ($('#player > .char-card').attr('id') === characters[i].name) {
-            player = characters[i];
-        } else if ($('#target > .char-card').attr('id') === characters[i].name) {
-            target = characters[i];
-        }
-    }
+/* Base Functionality */
 
-    // Combat
+// List the the characters from and display them in a specific field
+function listCharacters(arr, dest) {
+    $.each(arr, (i, char) => {
+        dest.append(makeCharCard(char));
+    });
+}
 
-    target.hp -= player.atk;
-    player.hp -= target.counterAtk;
-    player.atk += player.baseAtk;
+// Build a card with necessary data from each character object
+function makeCharCard(char) {
+    const charCard = $(`<div>`)
+        .addClass('char-card')
+        .attr('id', char.name);
 
-    if (player.hp <= 0) {
-        // If player loses all their life, kill them
-        killCharacter(player);
-    }
+    const charLabel = $('<div>').addClass('char-label');
+    const charName = $('<span>')
+        .addClass('char-name')
+        .text(char.name);
+    const charHp = $('<span>')
+        .addClass('char-hp')
+        .text(char.hp);
 
-    // Process combat results
-    if (target.hp <= 0) {
-        // If target loses all their life, kill them
-        killCharacter(target);
+    charLabel.append(charName).append(charHp);
 
-        // If all enemies are defeated, display the Victory screen
-        if (enemyList.length === 0) {
-            victoryScreen(player.name);
-        }
-    }
+    charCard.append(charLabel);
 
-    // Update HTML
-    $('#player > .char-card > .char-label > .char-hp').text(player.hp); // Breaks if selectors are less specific
-    $('#target > .char-card > .char-label > .char-hp').text(target.hp);
+    return charCard[0]; // I don't understand why I need to add [0] to select the element
 }
 
 function chooseCharacter(char) {
@@ -130,6 +122,46 @@ function chooseEnemy(char) {
     }
 }
 
+/* Combat Functionality */
+
+function attack() {
+    // Select the player and the target from the Characters array
+    let player, target;
+    for (let i = 0; i < characters.length; i++) {
+        if ($('#player > .char-card').attr('id') === characters[i].name) {
+            player = characters[i];
+        } else if ($('#target > .char-card').attr('id') === characters[i].name) {
+            target = characters[i];
+        }
+    }
+
+    // Combat
+
+    target.hp -= player.atk;
+    player.hp -= target.counterAtk;
+    player.atk += player.baseAtk;
+
+    if (player.hp <= 0) {
+        // If player loses all their life, kill them
+        killCharacter(player);
+    }
+
+    // Process combat results
+    if (target.hp <= 0) {
+        // If target loses all their life, kill them
+        killCharacter(target);
+
+        // If all enemies are defeated, display the Victory screen
+        if (enemyList.length === 0) {
+            victoryScreen(player.name);
+        }
+    }
+
+    // Update HTML
+    $('#player > .char-card > .char-label > .char-hp').text(player.hp); // Breaks if selectors are less specific
+    $('#target > .char-card > .char-label > .char-hp').text(target.hp);
+}
+
 function killCharacter(char) {
     if (char.user) {
         lossScreen(char);
@@ -145,12 +177,7 @@ function killCharacter(char) {
     });
 }
 
-// List the the characters from and display them in a specific field
-function listCharacters(arr, dest) {
-    $.each(arr, (i, char) => {
-        dest.append(makeCharCard(char));
-    });
-}
+/* End Functionality */
 
 function lossScreen(user) {
     $('#instructions')
@@ -161,26 +188,14 @@ function lossScreen(user) {
     $('#battlefield').attr('style', 'display: none');
 }
 
-// Build a card with necessary data from each character object
-function makeCharCard(char) {
-    const charCard = $(`<div>`)
-        .addClass('char-card')
-        .attr('id', char.name);
-
-    const charLabel = $('<div>').addClass('char-label');
-    const charName = $('<span>')
-        .addClass('char-name')
-        .text(char.name);
-    const charHp = $('<span>')
-        .addClass('char-hp')
-        .text(char.hp);
-
-    charLabel.append(charName).append(charHp);
-
-    charCard.append(charLabel);
-
-    return charCard[0]; // I don't understand why I need to add [0] to select the element
+function victoryScreen(char) {
+    $('#battlefield').attr('style', 'display: none');
+    $('#instructions')
+        .text(`${char} wins!`)
+        .css('textTransform', 'capitalize');
 }
+
+/* Initialize Game Window */
 
 function runGame() {
     // Give player instructions
@@ -195,13 +210,6 @@ function runGame() {
     // Hide the battlefield
     $('#enemies').attr('style', 'display: none');
     $('#battlefield').attr('style', 'display: none');
-}
-
-function victoryScreen(char) {
-    $('#battlefield').attr('style', 'display: none');
-    $('#instructions')
-        .text(`${char} wins!`)
-        .css('textTransform', 'capitalize');
 }
 
 // Start the game
