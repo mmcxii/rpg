@@ -1,6 +1,6 @@
 const characters = [
     {
-        name: 'joe',
+        name: 'Mary Sue',
         hp: 120,
         atk: 12,
         baseAtk: 12,
@@ -48,7 +48,7 @@ function listCharacters(arr, dest) {
 function makeCharCard(char) {
     const charCard = $(`<div>`)
         .addClass('char-card')
-        .attr('id', char.name);
+        .attr('id', slugify(char.name));
 
     const charLabel = $('<div>').addClass('char-label');
     const charName = $('<span>')
@@ -65,10 +65,14 @@ function makeCharCard(char) {
     return charCard[0]; // I don't understand why I need to add [0] to select the element
 }
 
+function slugify(name) {
+    return name.replace(/\s+/g, '-').toLowerCase();
+}
+
 function chooseCharacter(char) {
     // Send the Player's Character to the battlefield
     for (let i = 0; i < characters.length; i++) {
-        if (characters[i].name === char) {
+        if (slugify(characters[i].name) === char) {
             characters[i].user = true;
             $('#player').append(makeCharCard(characters[i]));
         }
@@ -98,7 +102,7 @@ function chooseEnemy(char) {
     const remainingEnemies = [];
 
     for (let i = 0; i < enemyList.length; i++) {
-        if (enemyList[i].name === char.id) {
+        if (slugify(enemyList[i].name) === char.id) {
             // Send the chosen enemy to the battlefield
             $('#target').append(makeCharCard(enemyList[i]));
         } else {
@@ -128,25 +132,24 @@ function attack() {
     // Select the player and the target from the Characters array
     let player, target;
     for (let i = 0; i < characters.length; i++) {
-        if ($('#player > .char-card').attr('id') === characters[i].name) {
+        if ($('#player > .char-card').attr('id') === slugify(characters[i].name)) {
             player = characters[i];
-        } else if ($('#target > .char-card').attr('id') === characters[i].name) {
+        } else if ($('#target > .char-card').attr('id') === slugify(characters[i].name)) {
             target = characters[i];
         }
     }
 
     // Combat
-
     target.hp -= player.atk;
     player.hp -= target.counterAtk;
     player.atk += player.baseAtk;
 
+    // Process combat results
     if (player.hp <= 0) {
         // If player loses all their life, kill them
         killCharacter(player);
     }
 
-    // Process combat results
     if (target.hp <= 0) {
         // If target loses all their life, kill them
         killCharacter(target);
@@ -179,9 +182,13 @@ function killCharacter(char) {
 
 /* End Functionality */
 
-function lossScreen(user) {
+function lossScreen(char) {
     $('#instructions')
-        .text(`${user.name} was defeated by ${$('#target > .char-card').attr('id')}!`)
+        .text(
+            `${char.name} was defeated by ${$(
+                '#target > .char-card > .char-label > .char-name'
+            ).text()}!`
+        )
         .css('textTransform', 'capitalize');
     $('#player').empty();
     $('#atk-btn').text('Very Sad!');
