@@ -1,30 +1,34 @@
 const characters = [
     {
         name: 'joe',
-        hp: 100,
-        atk: 8,
-        counterAtk: 12,
+        hp: 120,
+        atk: 12,
+        baseAtk: 12,
+        counterAtk: Math.floor(12 * 1.5),
         user: false,
     },
     {
         name: 'bob',
-        hp: 100,
-        atk: 8,
-        counterAtk: 12,
+        hp: 140,
+        atk: 10,
+        baseAtk: 10,
+        counterAtk: Math.floor(10 * 1.5),
         user: false,
     },
     {
         name: 'ted',
         hp: 100,
-        atk: 8,
-        counterAtk: 12,
+        atk: 14,
+        baseAtk: 14,
+        counterAtk: Math.floor(14 * 1.5),
         user: false,
     },
     {
         name: 'bill',
-        hp: 100,
+        hp: 160,
         atk: 8,
-        counterAtk: 12,
+        baseAtk: 8,
+        counterAtk: Math.floor(8 * 1.5),
         user: false,
     },
 ];
@@ -35,9 +39,9 @@ function attack() {
     // Select the player and the target from the Characters array
     let player, target;
     for (let i = 0; i < characters.length; i++) {
-        if ($('#player > .char-card')[0].id === characters[i].name) {
+        if ($('#player > .char-card').attr('id') === characters[i].name) {
             player = characters[i];
-        } else if ($('#target > .char-card')[0].id === characters[i].name) {
+        } else if ($('#target > .char-card').attr('id') === characters[i].name) {
             target = characters[i];
         }
     }
@@ -46,20 +50,27 @@ function attack() {
 
     target.hp -= player.atk;
     player.hp -= target.counterAtk;
-    player.atk += 8;
+    player.atk += player.baseAtk;
 
-    // Process combat results
     if (player.hp <= 0) {
         // If player loses all their life, kill them
         killCharacter(player);
-    } else if (target.hp <= 0) {
+    }
+
+    // Process combat results
+    if (target.hp <= 0) {
         // If target loses all their life, kill them
         killCharacter(target);
-    } else {
-        // Update HTML
-        $('#player > .char-card > .char-label > .char-hp')[0].textContent = player.hp;
-        $('#target > .char-card > .char-label > .char-hp')[0].textContent = target.hp;
+
+        // If all enemies are defeated, display the Victory screen
+        if (enemyList.length === 0) {
+            victoryScreen(player.name);
+        }
     }
+
+    // Update HTML
+    $('#player > .char-card > .char-label > .char-hp').text(player.hp); // Breaks if selectors are less specific
+    $('#target > .char-card > .char-label > .char-hp').text(target.hp);
 }
 
 function chooseCharacter(char) {
@@ -86,6 +97,9 @@ function chooseCharacter(char) {
     $('#character-select').attr('style', 'display: none');
     $('#enemies').attr('style', 'display: flex');
     $('#battlefield').attr('style', 'display: block');
+
+    // Update instructions
+    $('#instructions').html($('<h2>').text('Select an Enemy to fight:'));
 }
 
 function chooseEnemy(char) {
@@ -100,24 +114,30 @@ function chooseEnemy(char) {
             remainingEnemies.push(enemyList[i]);
         }
     }
+
     // Update the remaining enemies with those not chosen
     enemyList = remainingEnemies;
 
     // Check if there are any enemies remaining
-    enemyList.length === 0
-        ? // If there aren't, hide the field
-          $('#enemies').empty()
-        : // If there are, display them
-          $('#enemies-remaining').empty(),
+    if (enemyList.length === 0) {
+        // If there aren't, hide the field
+        $('#enemies').empty();
+        $('#instructions').empty();
+    } else {
+        // If there are, display them
+        $('#enemies-remaining').empty();
         listCharacters(enemyList, $('#enemies-remaining'));
+    }
 }
 
 function killCharacter(char) {
-    char.user
-        ? console.log('player defeated')
-        : $('#target')
-              .empty()
-              .append($('<h2>').text(enemyList.length === 1 ? 'Final Target:' : 'Target: '));
+    if (char.user) {
+        lossScreen(char);
+    } else {
+        $('#target')
+            .empty()
+            .html($('<h2>').text(enemyList.length === 1 ? 'Final Target:' : 'Target: '));
+    }
 
     // Allow the next enemy to be chosen
     $('.char-card').on('click', function() {
@@ -132,13 +152,28 @@ function listCharacters(arr, dest) {
     });
 }
 
+function lossScreen(user) {
+    $('#instructions')
+        .text(`${user.name} was defeated by ${$('#target > .char-card').attr('id')}!`)
+        .css('textTransform', 'capitalize');
+    $('#player').empty();
+    $('#atk-btn').text('Very Sad!');
+    $('#battlefield').attr('style', 'display: none');
+}
+
 // Build a card with necessary data from each character object
 function makeCharCard(char) {
-    const charCard = $(`<div class='char-card' id=${char.name}>`);
+    const charCard = $(`<div>`)
+        .addClass('char-card')
+        .attr('id', char.name);
 
-    const charLabel = $("<div class='char-label'>");
-    const charName = $("<span class='char-name'>").text(char.name);
-    const charHp = $("<span class='char-hp'>").text(char.hp);
+    const charLabel = $('<div>').addClass('char-label');
+    const charName = $('<span>')
+        .addClass('char-name')
+        .text(char.name);
+    const charHp = $('<span>')
+        .addClass('char-hp')
+        .text(char.hp);
 
     charLabel.append(charName).append(charHp);
 
@@ -148,6 +183,8 @@ function makeCharCard(char) {
 }
 
 function runGame() {
+    // Give player instructions
+    $('#instructions').html($('<h2>').text('Choose your Character:'));
     // Populate the Choose a Character Field
     listCharacters(characters, $('#character-select'));
     $('.char-card').on('click', function() {
@@ -158,6 +195,13 @@ function runGame() {
     // Hide the battlefield
     $('#enemies').attr('style', 'display: none');
     $('#battlefield').attr('style', 'display: none');
+}
+
+function victoryScreen(char) {
+    $('#battlefield').attr('style', 'display: none');
+    $('#instructions')
+        .text(`${char} wins!`)
+        .css('textTransform', 'capitalize');
 }
 
 // Start the game
