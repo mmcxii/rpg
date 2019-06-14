@@ -1,6 +1,6 @@
 const characters = [
     {
-        name: 'Mary Sue',
+        name: 'Abraham Lincoln',
         hp: 120,
         atk: 12,
         baseAtk: 12,
@@ -8,7 +8,7 @@ const characters = [
         user: false,
     },
     {
-        name: 'bob',
+        name: 'Cincinnatus',
         hp: 140,
         atk: 10,
         baseAtk: 10,
@@ -16,7 +16,7 @@ const characters = [
         user: false,
     },
     {
-        name: 'ted',
+        name: 'The Sedin Twins',
         hp: 100,
         atk: 14,
         baseAtk: 14,
@@ -24,7 +24,7 @@ const characters = [
         user: false,
     },
     {
-        name: 'bill',
+        name: 'Nosferatu',
         hp: 160,
         atk: 8,
         baseAtk: 8,
@@ -48,7 +48,9 @@ function listCharacters(arr, dest) {
 function makeCharCard(char) {
     const charCard = $(`<div>`)
         .addClass('char-card')
-        .attr('id', slugify(char.name));
+        .attr('id', slugify(char.name))
+        .css('background', `url('assets/img/characters/${slugify(char.name)}.png')`)
+        .css('background-size', 'cover');
 
     const charLabel = $('<div>').addClass('char-label');
     const charName = $('<span>')
@@ -65,6 +67,7 @@ function makeCharCard(char) {
     return charCard[0]; // I don't understand why I need to add [0] to select the element
 }
 
+// Replaces Character name with a slug version (no spaces, no caps)
 function slugify(name) {
     return name.replace(/\s+/g, '-').toLowerCase();
 }
@@ -185,9 +188,9 @@ function killCharacter(char) {
 function lossScreen(char) {
     $('#instructions')
         .text(
-            `${char.name} was defeated by ${$(
-                '#target > .char-card > .char-label > .char-name'
-            ).text()}!`
+            `${char.name} ${
+                char.name[char.name.length - 1] === 's' ? 'were' : 'was' // Changes based on plurality of Character name
+            } defeated by ${$('#target > .char-card > .char-label > .char-name').text()}!`
         )
         .css('textTransform', 'capitalize');
     $('#player').empty();

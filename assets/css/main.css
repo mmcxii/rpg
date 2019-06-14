@@ -57,10 +57,10 @@ footer {
 }
 
 .char-card {
-  background-color: red;
   margin: 20px auto;
   width: 200px;
   height: 200px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -70,6 +70,7 @@ footer {
   line-height: 40px;
   background-color: white;
   color: #000;
+  border-radius: 5px;
 }
 
 .char-name, .char-hp {

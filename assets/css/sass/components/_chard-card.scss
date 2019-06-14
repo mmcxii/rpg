@@ -3,10 +3,10 @@
     $font: 17px;
 
     &-card {
-        background-color: red;
         margin: $card-margin auto;
         width: $size;
         height: $size;
+        border-radius: 5px;
         cursor: pointer;
     }
 
@@ -16,6 +16,7 @@
         line-height: $size * 0.2;
         background-color: white;
         color: color(txt-dark);
+        border-radius: 5px;
     }
 
     &-name,
